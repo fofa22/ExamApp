@@ -15,6 +15,13 @@
 		12B15FEA1F99B55C00AFCA21 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12B15FE81F99B55C00AFCA21 /* LaunchScreen.storyboard */; };
 		12B15FF51F99B55C00AFCA21 /* ExamAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B15FF41F99B55C00AFCA21 /* ExamAppTests.swift */; };
 		12B160001F99B55C00AFCA21 /* ExamAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B15FFF1F99B55C00AFCA21 /* ExamAppUITests.swift */; };
+		12B160101F99BB0700AFCA21 /* ExamsClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1600F1F99BB0700AFCA21 /* ExamsClass.swift */; };
+		12B160131F99D8F500AFCA21 /* ExamAgenda1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B160111F99D8F500AFCA21 /* ExamAgenda1.swift */; };
+		12B160141F99D8F500AFCA21 /* ExamAgenda1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12B160121F99D8F500AFCA21 /* ExamAgenda1.xib */; };
+		12B160161F9C212200AFCA21 /* AddanExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B160151F9C212200AFCA21 /* AddanExamVC.swift */; };
+		12B1601B1F9C367200AFCA21 /* MenuTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B160191F9C367200AFCA21 /* MenuTVC.swift */; };
+		12B1601C1F9C367200AFCA21 /* MenuTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12B1601A1F9C367200AFCA21 /* MenuTVC.xib */; };
+		12B1601E1F9C3A1300AFCA21 /* ExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1601D1F9C3A1300AFCA21 /* ExamVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +56,13 @@
 		12B15FFB1F99B55C00AFCA21 /* ExamAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExamAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		12B15FFF1F99B55C00AFCA21 /* ExamAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamAppUITests.swift; sourceTree = "<group>"; };
 		12B160011F99B55C00AFCA21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		12B1600F1F99BB0700AFCA21 /* ExamsClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamsClass.swift; sourceTree = "<group>"; };
+		12B160111F99D8F500AFCA21 /* ExamAgenda1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamAgenda1.swift; sourceTree = "<group>"; };
+		12B160121F99D8F500AFCA21 /* ExamAgenda1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExamAgenda1.xib; path = ExamApp/ExamAgenda1.xib; sourceTree = "<group>"; };
+		12B160151F9C212200AFCA21 /* AddanExamVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddanExamVC.swift; sourceTree = "<group>"; };
+		12B160191F9C367200AFCA21 /* MenuTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuTVC.swift; path = ../MenuTVC.swift; sourceTree = "<group>"; };
+		12B1601A1F9C367200AFCA21 /* MenuTVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTVC.xib; sourceTree = "<group>"; };
+		12B1601D1F9C3A1300AFCA21 /* ExamVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +93,8 @@
 		12B15FD01F99B55C00AFCA21 = {
 			isa = PBXGroup;
 			children = (
+				12B1601A1F9C367200AFCA21 /* MenuTVC.xib */,
+				12B160121F99D8F500AFCA21 /* ExamAgenda1.xib */,
 				12B15FDB1F99B55C00AFCA21 /* ExamApp */,
 				12B15FF31F99B55C00AFCA21 /* ExamAppTests */,
 				12B15FFE1F99B55C00AFCA21 /* ExamAppUITests */,
@@ -100,8 +116,13 @@
 			isa = PBXGroup;
 			children = (
 				12B15FDC1F99B55C00AFCA21 /* AppDelegate.swift */,
+				12B1600F1F99BB0700AFCA21 /* ExamsClass.swift */,
 				12B15FDE1F99B55C00AFCA21 /* ViewController.swift */,
 				12B15FE01F99B55C00AFCA21 /* Main.storyboard */,
+				12B1601D1F9C3A1300AFCA21 /* ExamVC.swift */,
+				12B160191F9C367200AFCA21 /* MenuTVC.swift */,
+				12B160111F99D8F500AFCA21 /* ExamAgenda1.swift */,
+				12B160151F9C212200AFCA21 /* AddanExamVC.swift */,
 				12B15FE61F99B55C00AFCA21 /* Assets.xcassets */,
 				12B15FE81F99B55C00AFCA21 /* LaunchScreen.storyboard */,
 				12B15FEB1F99B55C00AFCA21 /* Info.plist */,
@@ -238,6 +259,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12B160141F99D8F500AFCA21 /* ExamAgenda1.xib in Resources */,
+				12B1601C1F9C367200AFCA21 /* MenuTVC.xib in Resources */,
 				12B15FEA1F99B55C00AFCA21 /* LaunchScreen.storyboard in Resources */,
 				12B15FE71F99B55C00AFCA21 /* Assets.xcassets in Resources */,
 				12B15FE21F99B55C00AFCA21 /* Main.storyboard in Resources */,
@@ -265,9 +288,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12B160131F99D8F500AFCA21 /* ExamAgenda1.swift in Sources */,
 				12B15FDF1F99B55C00AFCA21 /* ViewController.swift in Sources */,
+				12B160161F9C212200AFCA21 /* AddanExamVC.swift in Sources */,
+				12B1601E1F9C3A1300AFCA21 /* ExamVC.swift in Sources */,
 				12B15FE51F99B55C00AFCA21 /* ExamApp.xcdatamodeld in Sources */,
 				12B15FDD1F99B55C00AFCA21 /* AppDelegate.swift in Sources */,
+				12B1601B1F9C367200AFCA21 /* MenuTVC.swift in Sources */,
+				12B160101F99BB0700AFCA21 /* ExamsClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
