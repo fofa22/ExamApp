@@ -16,6 +16,12 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 	@IBOutlet weak var ExamDate: UITextField!
 	@IBOutlet weak var TextView: UITextView!
 	
+	@IBAction func DoneButton(_ sender: UIBarButtonItem) {
+		dismiss(animated: true, completion: nil)
+	}
+	let BarTitle = UINavigationItem(title: "Add an Exam")
+
+
 	
 	
 	override func viewDidLoad() {
@@ -26,6 +32,9 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		ExamTitle.delegate = self as? UITextFieldDelegate
 		ExamLocation.delegate = self as? UITextFieldDelegate
 		ExamDate.delegate = self as? UITextFieldDelegate
+		
+		// Attempt to perform segue
+		/*
 		var ExamTitleInput = ExamTitle.text
 		var ExamLocationInput = ExamLocation.text
 		var ExamDateInput = ExamDate.text
@@ -50,7 +59,7 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 			print(ExamTitleInput as Any,ExamLocationInput as Any,ExamDateInput as Any)
 		}
 		
-		}
+		} */
 
 		
 	}
@@ -61,11 +70,55 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-	
-
 	@IBAction func ConfirmButton(_ sender: Any) {
+		var UserData = false
+		var ExamTitleInput = ""
+		var ExamLocationInput = ""
+		var ExamDateInput = ""
+		
+		UserData = true
+		UserDefaults.standard.set(UserData, forKey: "UserData" )
+		// Appending text to ExamAgenda1 & testing for data presence:
+		
+		
+		if ExamTitle.text! == "" {
+			ExamTitle.backgroundColor = UIColor.red
+			ExamLocation.backgroundColor = UIColor.white
+			ExamDate.backgroundColor = UIColor.white
+		}else if ExamLocation.text == "" {
+			ExamLocation.backgroundColor = UIColor.red
+			ExamTitle.backgroundColor = UIColor.white
+			ExamDate.backgroundColor = UIColor.white
+		} else if ExamDate.text! == "" {
+			ExamDate.backgroundColor = UIColor.red
+			ExamTitle.backgroundColor = UIColor.white
+			ExamLocation.backgroundColor = UIColor.white
+		} else {
+			ExamTitle.backgroundColor = UIColor.white
+			ExamLocation.backgroundColor = UIColor.white
+			ExamDate.backgroundColor = UIColor.white
+			ExamTitleInput.append(ExamTitle.text!)
+			ExamLocationInput.append(ExamLocation.text!)
+			ExamDateInput.append(ExamDate.text!)
+			UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
+			UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
+			UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
+			
+			var Examz = Exam(ExamTitle: ExamTitleInput, Location: ExamLocationInput, Date: ExamDateInput)
+			ExamArray.append(Examz)
+			
+
+			// Tried to append email directly but failed because default NS function cannot transfer exams class
+			//ExamArray.append(Exam(ExamTitle: ExamTitle.text!, Location: ExamLocation.text!, Date: ExamDate.text!))
+			//UserDefaults.standard.set(ExamArray, forKey: "TheExamArray" )
+		}
+
 		TextView.text = "Exam Title: \(ExamTitle.text!)\nExam Location: \(ExamLocation.text!)\nExam Date: \(ExamDate.text!)\n"
 		
+
+		
+		
+		// intialising the notification:
 		// first option
 		let FirstRespond = UNNotificationAction(identifier: "FirstRespond", title: "Got it!", options: UNNotificationActionOptions.foreground)
 		// secound option

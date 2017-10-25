@@ -8,6 +8,16 @@
 
 import UIKit
 var ExamArray = [Exam]() // An array of exams
+var UserData = false
+var ExamTitleInput = [String]()
+var ExamLocationInput = [String]()
+var ExamDateInput = [String]()
+// var Exams: Exam
+
+//Testig
+//var ExamArray = [Exam(ExamTitle: "loli",Location: "Boli",Date: "lofy"),Exam(ExamTitle: "loli2",Location: "Boli2",Date: "lofy2")]
+
+let  FoldersArray = ["Exams Folder","Trash"]
 // protocol to preview Exams
 protocol CellSelectedDelegate{
 	func read(Exam: Exam)
@@ -30,14 +40,64 @@ class ExamAgenda1: UITableViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		var Exams: Exam
- // ExamCell.textLabel = ExamTitleLabel // ExamLabel equals the string of ExamCell
+		
+		
+		if UserData == true{
+			UserDefaults.standard.object(forKey: "UserData")
+			
+		}else{
+			
+			ExamTitleInput.append("No Data")
+			ExamLocationInput.append("No Data")
+			ExamDateInput.append("No Data")
+			
+			UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
+			UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
+			UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
+			
+			var Examz = Exam(ExamTitle: ExamTitleInput.last!,Location: ExamLocationInput.last!,Date: ExamDateInput.last!)
+			
+			if Examz.Date == "No Data"{
+				print("SAME!")
+			}else{
+				print("MUTATED!")
+			}
+			ExamArray.append(Examz)
+	
+			
+			// Attempt to transfer exams using default function
+			//ExamArray.append(Exam(ExamTitle: "No user data", Location: "No user data", Date: "No User data"))
+			//UserDefaults.standard.set(ExamArray, forKey: "TheExamArray" )
+			
+			
+			// removing user defaults
+			if ExamTitleInput[0] ==  "No Data" && ExamLocationInput[0] ==  "No Data" && ExamDateInput[0] == "No Data" {
+				
+				ExamTitleInput.remove(at: 0)
+				ExamLocationInput.remove(at: 0)
+				ExamDateInput.remove(at: 0)
+				ExamArray.remove(at: 0)
+				UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
+				UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
+				UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
+			
+				
+			
+
+				// trying to remove the default input using a full email!
+				// ExamArray.remove(at: 0)
+				// UserDefaults.standard.set(ExamArray, forKey: "TheExamArray" )
+			}
+			
+			
+		}
 		
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+		
 		
 		
 		
@@ -74,9 +134,10 @@ class ExamAgenda1: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExamCell", for: indexPath)
 
         // Configure the cell...
-		var selectedExam = ExamArray.first
-		cell.textLabel?.text = selectedExam?.ExamTitle2
-		cell.detailTextLabel?.text = selectedExam?.Date
+		
+		cell.textLabel?.text = ExamArray[indexPath.row].ExamTitle2
+		
+		cell.detailTextLabel?.text = ExamArray[indexPath.row].Date
 		
 
         return cell
@@ -96,6 +157,12 @@ class ExamAgenda1: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+			var DeletedExams = [Exam]()
+			var deletedExam : Exam
+			deletedExam = ExamArray.remove(at: indexPath.row)
+			DeletedExams.append(deletedExam)
+			
+			
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

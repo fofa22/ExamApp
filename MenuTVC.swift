@@ -8,7 +8,7 @@
 
 import UIKit
 
-//var  FoldersArray = ["Exams Folder","Trash"]
+var selectedRow = ""
 
 class MenuTVC: UITableViewController {
 	
@@ -50,15 +50,24 @@ class MenuTVC: UITableViewController {
         return cell
     }
     
+ override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+	//TODO: react to user selecting row
+	//I want the detail view controller to update based on the row that I selected
+	
+	print("In didSelectRowAt")
+	//TODO: get cell information
+	let  FoldersArray = ["Exams Folder","Trash"]
+	selectedRow = FoldersArray[indexPath.row]
+	
+	}
 
-    /*
+	
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
-
+	
     /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -86,16 +95,22 @@ class MenuTVC: UITableViewController {
     }
     */
 
-	/*
+	
     // MARK: - Navigation
-
+/*
    //  In a storyboard-based application, you will often want to do a little preparation before navigation
    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-	//let DestVC2 : ExamAgenda1 = segue.destination as! ExamAgenda1
+		let DestVC2 = segue.destination as! ExamAgenda1
+	
+	if ( selectedRow == "Trash"){
+		let Deletion = UIBarButtonItem(barButtonSystemItem: .trash, target: DestVC2, action: #selector(DestVC2.ExamCell.delete(_:)))
+		DestVC2.navigationItem.rightBarButtonItem = Deletion
+	}
+
     }
 	
-    */
+	*/
 	
 }
