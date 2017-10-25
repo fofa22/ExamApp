@@ -107,6 +107,7 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 			var Examz = Exam(ExamTitle: ExamTitleInput, Location: ExamLocationInput, Date: ExamDateInput)
 			ExamArray.append(Examz)
 			
+			
 
 			// Tried to append email directly but failed because default NS function cannot transfer exams class
 			//ExamArray.append(Exam(ExamTitle: ExamTitle.text!, Location: ExamLocation.text!, Date: ExamDate.text!))

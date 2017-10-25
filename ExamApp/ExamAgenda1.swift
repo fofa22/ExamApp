@@ -82,7 +82,7 @@ class ExamAgenda1: UITableViewController {
 				UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
 			
 				
-			
+				
 
 				// trying to remove the default input using a full email!
 				// ExamArray.remove(at: 0)
@@ -96,7 +96,7 @@ class ExamAgenda1: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+         self.navigationItem.rightBarButtonItem = self.editButtonItem
 		
 		
 		
