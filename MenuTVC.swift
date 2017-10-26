@@ -57,7 +57,7 @@ class MenuTVC: UITableViewController {
 	
 	print("In didSelectRowAt")
 	//TODO: get cell information
-	let  FoldersArray = ["Exams Folder","Trash"]
+	let  FoldersArray =  Array(ExamDictionary.keys)
 	selectedRowMTVC = FoldersArray[indexPath.row]
 	
 	}
@@ -109,10 +109,13 @@ class MenuTVC: UITableViewController {
 	if( selectedRowMTVC == "Exam Folder"){
 		ExamDictionary[selectedRowMTVC] = ExamArray
 		
+		
 	}  else if( selectedRowMTVC == "Trash"){
 		ExamDictionary[selectedRowMTVC] = DeletedExams
+		
 	}
-
+	DestVC2.navigationItem.title = selectedRowMTVC
+	
     }
 	
 	

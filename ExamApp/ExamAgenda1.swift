@@ -46,6 +46,11 @@ class ExamAgenda1: UITableViewController {
 		
 		if UserData == true{
 			UserDefaults.standard.object(forKey: "UserData")
+			UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
+			UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
+			UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
+			var Examz = Exam(ExamTitle: ExamTitleInput.last!,Location: ExamLocationInput.last!,Date: ExamDateInput.last!)
+			ExamArray.append(Examz)
 			
 		}else{
 			
