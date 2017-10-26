@@ -15,12 +15,12 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 	@IBOutlet weak var ExamLocation: UITextField!
 	@IBOutlet weak var ExamDate: UITextField!
 	@IBOutlet weak var TextView: UITextView!
-	
+	/*
 	@IBAction func DoneButton(_ sender: UIBarButtonItem) {
 		dismiss(animated: true, completion: nil)
 	}
 	let BarTitle = UINavigationItem(title: "Add an Exam")
-
+*/
 
 	
 	
@@ -78,45 +78,12 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		
 		UserData = true
 		UserDefaults.standard.set(UserData, forKey: "UserData" )
+		
+		
 		// Appending text to ExamAgenda1 & testing for data presence:
-		
-		
-		if ExamTitle.text! == "" {
-			ExamTitle.backgroundColor = UIColor.red
-			ExamLocation.backgroundColor = UIColor.white
-			ExamDate.backgroundColor = UIColor.white
-		}else if ExamLocation.text == "" {
-			ExamLocation.backgroundColor = UIColor.red
-			ExamTitle.backgroundColor = UIColor.white
-			ExamDate.backgroundColor = UIColor.white
-		} else if ExamDate.text! == "" {
-			ExamDate.backgroundColor = UIColor.red
-			ExamTitle.backgroundColor = UIColor.white
-			ExamLocation.backgroundColor = UIColor.white
-		} else {
-			ExamTitle.backgroundColor = UIColor.white
-			ExamLocation.backgroundColor = UIColor.white
-			ExamDate.backgroundColor = UIColor.white
-			ExamTitleInput.append(ExamTitle.text!)
-			ExamLocationInput.append(ExamLocation.text!)
-			ExamDateInput.append(ExamDate.text!)
-			UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
-			UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
-			UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
-			
-			var Examz = Exam(ExamTitle: ExamTitleInput, Location: ExamLocationInput, Date: ExamDateInput)
-			ExamArray.append(Examz)
-			
-			
-
-			// Tried to append email directly but failed because default NS function cannot transfer exams class
-			//ExamArray.append(Exam(ExamTitle: ExamTitle.text!, Location: ExamLocation.text!, Date: ExamDate.text!))
-			//UserDefaults.standard.set(ExamArray, forKey: "TheExamArray" )
-		}
-
 		TextView.text = "Exam Title: \(ExamTitle.text!)\nExam Location: \(ExamLocation.text!)\nExam Date: \(ExamDate.text!)\n"
 		
-
+		
 		
 		
 		// intialising the notification:
@@ -146,7 +113,7 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		let request = UNNotificationRequest(identifier: "Timer done!", content: content, trigger: trigger)
 		UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
 		
-			// Setting up the response function
+		// Setting up the response function
 		
 		func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
 			
@@ -168,6 +135,48 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 				UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
 			}
 		}
+		// dismiss(animated: true, completion: nil)
+		
+		if ExamTitle.text! == "" {
+			ExamTitle.backgroundColor = UIColor.red
+			ExamLocation.backgroundColor = UIColor.white
+			ExamDate.backgroundColor = UIColor.white
+		}else if ExamLocation.text == "" {
+			ExamLocation.backgroundColor = UIColor.red
+			ExamTitle.backgroundColor = UIColor.white
+			ExamDate.backgroundColor = UIColor.white
+		} else if ExamDate.text! == "" {
+			ExamDate.backgroundColor = UIColor.red
+			ExamTitle.backgroundColor = UIColor.white
+			ExamLocation.backgroundColor = UIColor.white
+		} else {
+			ExamTitle.backgroundColor = UIColor.white
+			ExamLocation.backgroundColor = UIColor.white
+			ExamDate.backgroundColor = UIColor.white
+			ExamTitleInput.append(ExamTitle.text!)
+			ExamLocationInput.append(ExamLocation.text!)
+			ExamDateInput.append(ExamDate.text!)
+			UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
+			UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
+			UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
+			
+			var Examz = Exam(ExamTitle: ExamTitleInput, Location: ExamLocationInput, Date: ExamDateInput)
+			
+			ExamArray.append(Examz)
+			if selectedRowMTVC == "Exam Folder"{
+			ExamDictionary[selectedRowMTVC] = ExamArray
+				print("The Date noe is \(ExamDate.text!)")
+			}else if selectedRowMTVC == "Trash"{
+				ExamDictionary[selectedRowMTVC] = DeletedExams
+				print("The Deleted Date noe is \(ExamDate.text!)")
+			}
+
+			// Tried to append email directly but failed because default NS function cannot transfer exams class
+			//ExamArray.append(Exam(ExamTitle: ExamTitle.text!, Location: ExamLocation.text!, Date: ExamDate.text!))
+			//UserDefaults.standard.set(ExamArray, forKey: "TheExamArray" )
+		}
+
+		
 
 	}
 	

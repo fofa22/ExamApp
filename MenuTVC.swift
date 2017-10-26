@@ -8,8 +8,9 @@
 
 import UIKit
 
-var selectedRow = ""
+var selectedRowMTVC = ""
 
+var ExamDictionary = ["Exam Folder": [Exam](),"Trash": [Exam]()]
 class MenuTVC: UITableViewController {
 	
     override func viewDidLoad() {
@@ -57,7 +58,7 @@ class MenuTVC: UITableViewController {
 	print("In didSelectRowAt")
 	//TODO: get cell information
 	let  FoldersArray = ["Exams Folder","Trash"]
-	selectedRow = FoldersArray[indexPath.row]
+	selectedRowMTVC = FoldersArray[indexPath.row]
 	
 	}
 
@@ -97,20 +98,23 @@ class MenuTVC: UITableViewController {
 
 	
     // MARK: - Navigation
-/*
+
    //  In a storyboard-based application, you will often want to do a little preparation before navigation
    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-		let DestVC2 = segue.destination as! ExamAgenda1
 	
-	if ( selectedRow == "Trash"){
-		let Deletion = UIBarButtonItem(barButtonSystemItem: .trash, target: DestVC2, action: #selector(DestVC2.ExamCell.delete(_:)))
-		DestVC2.navigationItem.rightBarButtonItem = Deletion
+	let DestVC2 = segue.destination as! ExamAgenda1
+	
+	if( selectedRowMTVC == "Exam Folder"){
+		ExamDictionary[selectedRowMTVC] = ExamArray
+		
+	}  else if( selectedRowMTVC == "Trash"){
+		ExamDictionary[selectedRowMTVC] = DeletedExams
 	}
 
     }
 	
-	*/
+	
 	
 }

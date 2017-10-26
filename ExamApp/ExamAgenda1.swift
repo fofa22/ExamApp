@@ -12,6 +12,8 @@ var UserData = false
 var ExamTitleInput = [String]()
 var ExamLocationInput = [String]()
 var ExamDateInput = [String]()
+var DeletedExams = [Exam]()
+var selectedRow = ""
 // var Exams: Exam
 
 //Testig
@@ -132,14 +134,27 @@ class ExamAgenda1: UITableViewController {
 	
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExamCell", for: indexPath)
-
-        // Configure the cell...
-		
 		cell.textLabel?.text = ExamArray[indexPath.row].ExamTitle2
 		
-		cell.detailTextLabel?.text = ExamArray[indexPath.row].Date
 		
-
+		cell.detailTextLabel?.text = ExamArray[indexPath.row].Date
+		/*
+		// Configure the cell...
+		if selectedRowMTVC == "Exam Folder"{
+			cell.textLabel?.text = ExamArray[indexPath.row].ExamTitle2
+			
+			
+			cell.detailTextLabel?.text = ExamArray[indexPath.row].Date
+			
+		}else if selectedRowMTVC == "Trash"{
+			cell.textLabel?.text = DeletedExams[indexPath.row].ExamTitle2
+			
+			
+			cell.detailTextLabel?.text = DeletedExams[indexPath.row].Date
+		}
+		
+		
+*/
         return cell
     }
 	
@@ -157,11 +172,11 @@ class ExamAgenda1: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-			var DeletedExams = [Exam]()
+			
 			var deletedExam : Exam
 			deletedExam = ExamArray.remove(at: indexPath.row)
 			DeletedExams.append(deletedExam)
-			
+			ExamDictionary[selectedRowMTVC] = DeletedExams
 			
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
