@@ -15,6 +15,7 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 	@IBOutlet weak var ExamLocation: UITextField!
 	@IBOutlet weak var ExamDate: UITextField!
 	@IBOutlet weak var TextView: UITextView!
+	
 	/*
 	@IBAction func DoneButton(_ sender: UIBarButtonItem) {
 		dismiss(animated: true, completion: nil)
@@ -22,9 +23,13 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 	let BarTitle = UINavigationItem(title: "Add an Exam")
 */
 
-	
-	
 	override func viewDidLoad() {
+		/*
+		ExamTitle.text = "No data"
+		ExamLocation.text = "No data"
+		ExamDate.text = "No data"
+		*/
+		
 		super.viewDidLoad()
 		UNUserNotificationCenter.current().delegate = self
 		
@@ -76,6 +81,7 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		var ExamLocationInput = ""
 		var ExamDateInput = ""
 		
+		// probe into this ?? why is the user data rewritten permiantly ??
 		UserData = true
 		UserDefaults.standard.set(UserData, forKey: "UserData" )
 		
@@ -135,7 +141,8 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 				UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
 			}
 		}
-		// dismiss(animated: true, completion: nil)
+		
+	
 		
 		if ExamTitle.text! == "" {
 			ExamTitle.backgroundColor = UIColor.red
@@ -163,12 +170,15 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 			var Examz = Exam(ExamTitle: ExamTitleInput, Location: ExamLocationInput, Date: ExamDateInput)
 			
 			ExamArray.append(Examz)
+			// uncomment the following line to allow VC dismiss
+			dismiss(animated: true, completion: nil)
+			
 			if selectedRowMTVC == "Exam Folder"{
 			ExamDictionary[selectedRowMTVC] = ExamArray
-				print("The Date noe is \(ExamDate.text!)")
+				print("The Date now is \(ExamDate.text!)")
 			}else if selectedRowMTVC == "Trash"{
 				ExamDictionary[selectedRowMTVC] = DeletedExams
-				print("The Deleted Date noe is \(ExamDate.text!)")
+				print("The Deleted Date now is \(ExamDate.text!)")
 			}
 
 			// Tried to append email directly but failed because default NS function cannot transfer exams class

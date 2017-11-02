@@ -105,16 +105,16 @@ class MenuTVC: UITableViewController {
         // Pass the selected object to the new view controller.
 	
 	let DestVC2 = segue.destination as! ExamAgenda1
+	DestVC2.navigationItem.title = "\(selectedRowMTVC)"
 	
 	if( selectedRowMTVC == "Exam Folder"){
 		ExamDictionary[selectedRowMTVC] = ExamArray
-		
 		
 	}  else if( selectedRowMTVC == "Trash"){
 		ExamDictionary[selectedRowMTVC] = DeletedExams
 		
 	}
-	DestVC2.navigationItem.title = selectedRowMTVC
+	
 	
     }
 	
