@@ -15,22 +15,15 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 	@IBOutlet weak var ExamLocation: UITextField!
 	@IBOutlet weak var ExamDate: UITextField!
 	@IBOutlet weak var TextView: UITextView!
+	let datePicker = UIDatePicker()
 	
-	/*
-	@IBAction func DoneButton(_ sender: UIBarButtonItem) {
-		dismiss(animated: true, completion: nil)
-	}
-	let BarTitle = UINavigationItem(title: "Add an Exam")
-*/
-
 	override func viewDidLoad() {
-		/*
-		ExamTitle.text = "No data"
-		ExamLocation.text = "No data"
-		ExamDate.text = "No data"
-		*/
+	
 		
 		super.viewDidLoad()
+		
+		createDatePicker()
+		
 		UNUserNotificationCenter.current().delegate = self
 		
 		// Do any additional setup after loading the view, typically from a nib.
@@ -69,6 +62,38 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		
 	}
 	
+	func createDatePicker(){
+		// Formating for the date picker
+		datePicker.datePickerMode = .dateAndTime
+		
+		// Creating toolbar
+		let toolBar = UIToolbar()
+		toolBar.sizeToFit()
+		
+		// Creating bar button
+		let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(DonePressed))
+		toolBar.setItems([doneButton], animated: false)
+		
+		
+		// adding tool bar to the date Picker variable
+		ExamDate.inputAccessoryView = toolBar
+		
+		// Assiging ate picker to text feild
+		ExamDate.inputView = datePicker
+		
+	}
+	
+	// creating the function for Done in date picker
+	
+	func DonePressed(){
+		// formating the date in text feild
+		let dateFormater = DateFormatter()
+		dateFormater.dateStyle = .short
+		dateFormater.timeStyle = .short
+		ExamDate.text = dateFormater.string(from: datePicker.date)
+		self.view.endEditing(true)
+	}
+	
 	
 
 	override func didReceiveMemoryWarning() {
@@ -80,7 +105,13 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		var ExamTitleInput = ""
 		var ExamLocationInput = ""
 		var ExamDateInput = ""
+/*
+		let ExamTitleInput = ExamTitle.text;
+		let ExamLocationInput = ExamLocation.text;
+		let ExamDateInput = ExamDate.text;
+		*/
 		
+	
 		// probe into this ?? why is the user data rewritten permiantly ??
 		UserData = true
 		UserDefaults.standard.set(UserData, forKey: "UserData" )
@@ -163,9 +194,11 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 			ExamTitleInput.append(ExamTitle.text!)
 			ExamLocationInput.append(ExamLocation.text!)
 			ExamDateInput.append(ExamDate.text!)
-			UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
-			UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
-			UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
+			UserDefaults.standard.set(ExamTitleInput, forKey: "ExamTitle")
+			UserDefaults.standard.set(ExamLocationInput, forKey: "ExamLocation")
+			UserDefaults.standard.set(ExamDateInput, forKey: "ExamDate")
+			UserDefaults.standard.synchronize();
+			
 			
 			var Examz = Exam(ExamTitle: ExamTitleInput, Location: ExamLocationInput, Date: ExamDateInput)
 			

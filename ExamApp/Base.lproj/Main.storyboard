@@ -278,6 +278,7 @@
                                 <state key="normal" title="Confirm"/>
                                 <connections>
                                     <action selector="ConfirmButton:" destination="8w9-uu-omi" eventType="touchUpInside" id="4Gn-2K-eaQ"/>
+                                    <segue destination="nNi-bg-6Xa" kind="push" id="OJm-Gh-95F"/>
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ad-4h-8xO">
