@@ -45,7 +45,7 @@ class MenuTVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for: indexPath)
 
         // Configure the cell...
-		let  FoldersArray = ["Exams Folder","Trash"]
+		let  FoldersArray =  Array(ExamDictionary.keys)
 		cell.textLabel?.text = FoldersArray[indexPath.row]
 
         return cell
@@ -57,8 +57,14 @@ class MenuTVC: UITableViewController {
 	
 	print("In didSelectRowAt")
 	//TODO: get cell information
+	
 	let  FoldersArray =  Array(ExamDictionary.keys)
+	print("\(FoldersArray)")
+	
 	selectedRowMTVC = FoldersArray[indexPath.row]
+
+	print("\(selectedRowMTVC)")
+	performSegue(withIdentifier: "pushTitle", sender: self)
 	
 	}
 
@@ -105,19 +111,24 @@ class MenuTVC: UITableViewController {
         // Pass the selected object to the new view controller.
 	
 	let DestVC2 = segue.destination as! ExamAgenda1
-	DestVC2.navigationItem.title = "\(selectedRowMTVC)"
+	
+	DestVC2.navigationItem.title = selectedRowMTVC
+	print("\(selectedRowMTVC)")
 	
 	if( selectedRowMTVC == "Exam Folder"){
+		let Addition = UIBarButtonItem(barButtonSystemItem: .add, target: DestVC2, action: #selector(DestVC2.AddExamButton(_:)))
+		DestVC2.navigationItem.rightBarButtonItem = Addition
 		ExamDictionary[selectedRowMTVC] = ExamArray
 		
 	}  else if( selectedRowMTVC == "Trash"){
+		DestVC2.navigationItem.rightBarButtonItem = DestVC2.editButtonItem
+
 		ExamDictionary[selectedRowMTVC] = DeletedExams
 		
 	}
 	
 	
-    }
-	
+	}
 	
 	
 }

@@ -17,6 +17,11 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 	@IBOutlet weak var TextView: UITextView!
 	let datePicker = UIDatePicker()
 	
+	var UserData = false
+	var ExamTitleInput = ""
+	var ExamLocationInput = ""
+	var ExamDateInput = ""
+	
 	override func viewDidLoad() {
 	
 		
@@ -31,38 +36,11 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		ExamLocation.delegate = self as? UITextFieldDelegate
 		ExamDate.delegate = self as? UITextFieldDelegate
 		
-		// Attempt to perform segue
-		/*
-		var ExamTitleInput = ExamTitle.text
-		var ExamLocationInput = ExamLocation.text
-		var ExamDateInput = ExamDate.text
 		
-		 func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-			
-			
-			let DestVC : ExamAgenda1 = segue.destination as! ExamAgenda1
-			
-			if ExamTitleInput == nil{
-				print("A7eah 2")
-			}
-			 else{
-			var Exams: Exam
-			Exams = Exam(ExamTitle: ExamTitleInput!, Location: ExamLocationInput!, Date: ExamDateInput!)
-			
-			var ExamLabel = DestVC.ExamCell.detailTextLabel
-			 ExamLabel?.text = ExamTitleInput
-			
-			var ExamDateLabel = DestVC.ExamCell.textLabel
-			ExamDateLabel?.text = ExamDateInput
-			print(ExamTitleInput as Any,ExamLocationInput as Any,ExamDateInput as Any)
-		}
-		
-		} */
-
 		
 	}
 	
-	func createDatePicker(){
+		func createDatePicker(){
 		// Formating for the date picker
 		datePicker.datePickerMode = .dateAndTime
 		
@@ -83,7 +61,7 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		
 	}
 	
-	// creating the function for Done in date picker
+	// creating the function for Done button in date picker
 	
 	func DonePressed(){
 		// formating the date in text feild
@@ -100,18 +78,9 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-	@IBAction func ConfirmButton(_ sender: Any) {
-		var UserData = false
-		var ExamTitleInput = ""
-		var ExamLocationInput = ""
-		var ExamDateInput = ""
-/*
-		let ExamTitleInput = ExamTitle.text;
-		let ExamLocationInput = ExamLocation.text;
-		let ExamDateInput = ExamDate.text;
-		*/
-		
 	
+	@IBAction func ConfirmButton(_ sender: Any) {
+		
 		// probe into this ?? why is the user data rewritten permiantly ??
 		UserData = true
 		UserDefaults.standard.set(UserData, forKey: "UserData" )
@@ -121,57 +90,6 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		TextView.text = "Exam Title: \(ExamTitle.text!)\nExam Location: \(ExamLocation.text!)\nExam Date: \(ExamDate.text!)\n"
 		
 		
-		
-		
-		// intialising the notification:
-		// first option
-		let FirstRespond = UNNotificationAction(identifier: "FirstRespond", title: "Got it!", options: UNNotificationActionOptions.foreground)
-		// secound option
-		let SecondRespond = UNNotificationAction(identifier: "SecondRespond", title: "Remind me in 2 mins", options: UNNotificationActionOptions.foreground)
-		
-		
-		// setting up the notification category
-		
-		let AnswerCategory = UNNotificationCategory(identifier: "myCategory", actions: [FirstRespond,SecondRespond], intentIdentifiers: [], options: [])
-		
-		// installing the category into the current notification center
-		
-		UNUserNotificationCenter.current().setNotificationCategories([AnswerCategory])
-		
-		// creating the notification
-		let content = UNMutableNotificationContent()
-		content.title = ExamTitle.text!
-		content.subtitle = ExamLocation.text!
-		content.body = ExamDate.text!
-		content.badge = 1
-		
-		// define a triger that will turn o the notification
-		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-		let request = UNNotificationRequest(identifier: "Timer done!", content: content, trigger: trigger)
-		UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-		
-		// Setting up the response function
-		
-		func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-			
-			if response.actionIdentifier == "FirstRespond"{
-				print ("Alright")
-			}
-				
-			else{
-				
-				// re-creating the notification
-				
-				let content = UNMutableNotificationContent()
-				content.title = ExamTitle.text!
-				content.subtitle = ExamLocation.text!
-				content.body = ExamDate.text!
-				content.badge = 1
-				let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
-				let request = UNNotificationRequest(identifier: "Timer done!", content: content, trigger: trigger)
-				UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-			}
-		}
 		
 	
 		
@@ -203,15 +121,22 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 			var Examz = Exam(ExamTitle: ExamTitleInput, Location: ExamLocationInput, Date: ExamDateInput)
 			
 			ExamArray.append(Examz)
-			// uncomment the following line to allow VC dismiss
-			dismiss(animated: true, completion: nil)
 			
+			// uncomment the following line to allow VC dismiss
+			
+	//performSegue(withIdentifier: "CON", sender: self)
+			
+			//dismiss(animated: true, completion: nil)
 			if selectedRowMTVC == "Exam Folder"{
 			ExamDictionary[selectedRowMTVC] = ExamArray
 				print("The Date now is \(ExamDate.text!)")
+				
+				
 			}else if selectedRowMTVC == "Trash"{
 				ExamDictionary[selectedRowMTVC] = DeletedExams
 				print("The Deleted Date now is \(ExamDate.text!)")
+				
+				
 			}
 
 			// Tried to append email directly but failed because default NS function cannot transfer exams class
@@ -220,6 +145,85 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		}
 
 		
+		var alertView = UIAlertController(title: "Confirmation", message: "Your Exam: \(ExamTitleInput) has been added", preferredStyle: UIAlertControllerStyle.alert)
+		alertView.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (UIAlertAction) in
+			self.dismiss(animated: true, completion: nil)
+		}))
+		
+		self.present(alertView, animated: true, completion: nil);
+		
+		// the below section is originally right afer the button !
+		// creating the notification
+		
+		let content = UNMutableNotificationContent()
+		content.title = "Your Exam: \(ExamTitle.text!) is up!"
+		content.subtitle = "Your Exam location is: \(ExamLocation.text!)"
+		content.body =  "Your Exam date is on the \(ExamDate.text!)"
+		content.badge = 1
+	
+		// define a triger that will turn o the notification
+		
+		// first get the date:
+		
+			var dateFormater = DateFormatter()
+			
+			dateFormater.dateFormat = "MM - dd - yyyy'T'HH:mm.ss.SSSZ"
+			dateFormater.timeZone = NSTimeZone(name: "UTC") as! TimeZone
+			let dateForm = dateFormater.date(from: ExamDateInput)
+		print("\(dateForm)")
+		
+		 var date = DateComponents()
+		 //date.hour = 8
+		 //date.minute = 30
+		date.second = 5
+		
+		let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: false)
+		
+		
+		let request = UNNotificationRequest(identifier: "its Exam time", content: content, trigger: trigger)
+		
+		UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+		
+		// intialising the notification:
+		// first option
+		let FirstRespond = UNNotificationAction(identifier: "FirstRespond", title: "Got it!", options: UNNotificationActionOptions.foreground)
+		// secound option
+		let SecondRespond = UNNotificationAction(identifier: "SecondRespond", title: "Remind me in 2 mins", options: UNNotificationActionOptions.foreground)
+		
+		
+		// setting up the notification category
+		
+		let AnswerCategory = UNNotificationCategory(identifier: "myCategory", actions: [FirstRespond,SecondRespond], intentIdentifiers: [], options: [])
+		
+		// installing the category into the current notification center
+		
+		UNUserNotificationCenter.current().setNotificationCategories([AnswerCategory])
+		
+		
+		
+		
+		// Setting up the response function
+		
+		func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+			
+			if response.actionIdentifier == "FirstRespond"{
+				print ("Alright")
+			}
+				
+			else{
+				
+				// re-creating the notification
+				
+				let content = UNMutableNotificationContent()
+				content.title = ExamTitle.text!
+				content.subtitle = ExamLocation.text!
+				content.body = ExamDate.text!
+				content.badge = 1
+				let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+				let request = UNNotificationRequest(identifier: "Timer done!", content: content, trigger: trigger)
+				UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+			}
+		}
 
 	}
 	
@@ -236,6 +240,27 @@ extension ViewController : UITextFieldDelegate{
 	func textFieldShouldReturn(_ textFeild: UITextField) -> Bool{
 		textFeild.resignFirstResponder()
 		return true
-}
+	}
 	
 }
+
+func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+	// Get the new view controller using segue.destinationViewController.
+	// Pass the selected object to the new view controller.
+	
+	let destEAVC = segue.destination as! ExamAgenda1
+	
+	var	CurrentRow = ExamTitleInput.endIndex
+	
+	destEAVC.ExamCell.textLabel?.text = ExamArray[CurrentRow].ExamTitle2
+
+	destEAVC.ExamCell.detailTextLabel?.text = ExamArray[CurrentRow].Date
+	
+			let backButton = UIBarButtonItem(barButtonSystemItem:.save, target: destEAVC, action: #selector(destEAVC.backAction(_:)))
+			
+			destEAVC.navigationItem.leftBarButtonItem = backButton
+
+	 destEAVC.updateFocusIfNeeded()
+
+}
+

@@ -17,7 +17,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
 			if didAllow {
 				print("Allowed")
 			}else{
-				print("a7eah")
+				print("Please allow notification in genral settings")
 			}
 		})
 		

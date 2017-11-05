@@ -87,9 +87,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="nNi-bg-6Xa" kind="show" id="5Mv-3C-bph"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -99,24 +96,24 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="AOC-rS-ZkQ"/>
                     <connections>
-                        <segue destination="nNi-bg-6Xa" kind="show" id="5Ce-hC-9rt"/>
+                        <segue destination="nNi-bg-6Xa" kind="show" identifier="pushTitle" id="5Ce-hC-9rt"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ItU-JM-ZZp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1186" y="139"/>
         </scene>
-        <!--Exam Agenda1-->
+        <!--Title-->
         <scene sceneID="yMM-mx-9yd">
             <objects>
                 <tableViewController id="nNi-bg-6Xa" customClass="ExamAgenda1" customModule="ExamApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="mZY-QM-Nj7">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="58" sectionHeaderHeight="28" sectionFooterHeight="28" id="mZY-QM-Nj7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexBackgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                         <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BsH-1H-2PZ">
-                            <rect key="frame" x="0.0" y="108" width="375" height="82"/>
+                            <rect key="frame" x="0.0" y="86" width="375" height="82"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <accessibility key="accessibilityConfiguration" identifier="AddanExam">
@@ -129,26 +126,25 @@
                             </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="AddExamButton:" destination="nNi-bg-6Xa" eventType="touchUpInside" id="2Cv-EA-izy"/>
-                                <segue destination="8w9-uu-omi" kind="show" id="xTD-rL-XoQ"/>
                             </connections>
                         </button>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationLevel="2" indentationWidth="13" reuseIdentifier="ExamCell" textLabel="hYb-t0-C4c" detailTextLabel="v1S-Y9-gfO" rowHeight="80" style="IBUITableViewCellStyleSubtitle" id="VV8-cn-HQf">
-                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationLevel="2" indentationWidth="13" reuseIdentifier="ExamCell" textLabel="hYb-t0-C4c" detailTextLabel="v1S-Y9-gfO" rowHeight="58" style="IBUITableViewCellStyleSubtitle" id="VV8-cn-HQf">
+                                <rect key="frame" x="0.0" y="28" width="375" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VV8-cn-HQf" id="OX7-eO-n6q">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="57.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hYb-t0-C4c">
-                                            <rect key="frame" x="41" y="23" width="33.5" height="20.5"/>
+                                            <rect key="frame" x="41" y="12" width="33.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="v1S-Y9-gfO">
-                                            <rect key="frame" x="41" y="43.5" width="44" height="14.5"/>
+                                            <rect key="frame" x="41" y="32.5" width="44" height="14.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -163,11 +159,14 @@
                             <outlet property="delegate" destination="nNi-bg-6Xa" id="xXA-Ne-Tac"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="3Y2-eU-SGM"/>
+                    <navigationItem key="navigationItem" title="Title" id="GId-yJ-LOO"/>
+                    <connections>
+                        <segue destination="8w9-uu-omi" kind="show" identifier="EA2AE" id="Uhm-f6-GIz"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z7I-HM-EYT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2082" y="139"/>
+            <point key="canvasLocation" x="2072.8000000000002" y="277.51124437781112"/>
         </scene>
         <!--ExamVC-->
         <scene sceneID="S9g-h1-1Pi">
@@ -278,7 +277,6 @@
                                 <state key="normal" title="Confirm"/>
                                 <connections>
                                     <action selector="ConfirmButton:" destination="8w9-uu-omi" eventType="touchUpInside" id="4Gn-2K-eaQ"/>
-                                    <segue destination="nNi-bg-6Xa" kind="push" id="OJm-Gh-95F"/>
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ad-4h-8xO">
@@ -321,11 +319,12 @@
                         <outlet property="ExamLocation" destination="Aqw-ex-pqF" id="7fE-ve-shj"/>
                         <outlet property="ExamTitle" destination="rgT-nd-ikI" id="Uju-2v-3t8"/>
                         <outlet property="TextView" destination="HN9-Pa-hdc" id="qGw-Bq-H96"/>
+                        <segue destination="nNi-bg-6Xa" kind="showDetail" identifier="CON" id="mk6-4z-jHZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cRY-pQ-Hs8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3148" y="54.422788605697157"/>
+            <point key="canvasLocation" x="3300" y="18"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="m0s-zt-AUi">
@@ -346,6 +345,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5Mv-3C-bph"/>
+        <segue reference="mk6-4z-jHZ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -12,6 +12,8 @@ var UserData = false
 var ExamTitleInput = [String]()
 var ExamLocationInput = [String]()
 var ExamDateInput = [String]()
+var ExamTitleString = ""
+
 var DeletedExams = [Exam]()
 var selectedRow = ""
 // var Exams: Exam
@@ -35,14 +37,14 @@ protocol DataUpdateDelegate {
 
 // has to conform to , DataUpdateDelegate below!
 
-class ExamAgenda1: UITableViewController {
+class ExamAgenda1: UITableViewController{
 	
 	@IBOutlet weak var ExamCell: UITableViewCell!
 
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		
+		addBackButton()
 		
 		if UserData == true{
 			UserDefaults.standard.object(forKey: "UserData")
@@ -114,10 +116,21 @@ class ExamAgenda1: UITableViewController {
 	@IBAction func AddExamButton(_ sender: Any) {
 		//var ExamAdded: Exam
 		//	ExamArray.append(ExamAdded)
+		performSegue(withIdentifier: "EA2AE", sender: self)
 	}
 	
+	func addBackButton() {
+	let backButton = UIBarButtonItem(barButtonSystemItem:.done, target: self, action: #selector(backAction))
 	
+		backButton.title = "Back"
+		
+	self.navigationItem.leftBarButtonItem = backButton
+		
+	}
 	
+	@IBAction func backAction(_ sender: UIButton) {
+		let _ = self.navigationController?.popViewController(animated: true)
+	}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -139,6 +152,7 @@ class ExamAgenda1: UITableViewController {
 	
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExamCell", for: indexPath)
+		
 		cell.textLabel?.text = ExamArray[indexPath.row].ExamTitle2
 		
 		
@@ -207,13 +221,13 @@ class ExamAgenda1: UITableViewController {
 
 	
     // MARK: - Navigation
-/*
+
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
 		let destVC: AddanExamVC = segue.destination as! AddanExamVC
-		
+		/*
 		if destVC.ExamTitle.text == nil{
 			print("a7eah")
 		}else{
@@ -229,11 +243,10 @@ class ExamAgenda1: UITableViewController {
 			ExamArray.append(Exams)
 		}
 		
-		
+		*/
 
     }
-*/
-	
+
 	
     
 }
