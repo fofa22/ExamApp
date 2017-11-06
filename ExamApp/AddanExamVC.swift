@@ -84,11 +84,7 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 	
 	@IBAction func ConfirmButton(_ sender: Any) {
 		
-		// probe into this ?? why is the user data rewritten permiantly ??
-		UserData = true
-		UserDefaults.standard.set(UserData, forKey: "UserData" )
-		
-		
+	
 		// Appending text to ExamAgenda1 & testing for data presence:
 		TextView.text = "Exam Title: \(ExamTitle.text!)\nExam Location: \(ExamLocation.text!)\nExam Date: \(ExamDate.text!)\n"
 		
@@ -126,25 +122,15 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 			ExamArray.append(Examz)
 			
 			// uncomment the following line to allow VC dismiss
+			/*
+			//performSegue(withIdentifier: "CON", sender: self)
+			*/
 			
-	//performSegue(withIdentifier: "CON", sender: self)
+			dismiss(animated: true, completion: nil)
 			
-			//dismiss(animated: true, completion: nil)
-			if selectedRowMTVC == "Exam Folder"{
-			ExamDictionary[selectedRowMTVC] = ExamArray
-				print("The Date now is \(ExamDate.text!)")
-				
-				
-			}else if selectedRowMTVC == "Trash"{
-				ExamDictionary[selectedRowMTVC] = DeletedExams
-				print("The Deleted Date now is \(ExamDate.text!)")
-				
-				
-			}
+			
 
-			// Tried to append email directly but failed because default NS function cannot transfer exams class
-			//ExamArray.append(Exam(ExamTitle: ExamTitle.text!, Location: ExamLocation.text!, Date: ExamDate.text!))
-			//UserDefaults.standard.set(ExamArray, forKey: "TheExamArray" )
+			
 		}
 
 		
@@ -164,39 +150,40 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		content.body =  "Your Exam date is on the \(ExamDate.text!)"
 		content.badge = 1
 		content.categoryIdentifier = "AnswerCategory"
-	
-		// define a triger that will turn on the notification based on user date input
+		
+			// define a triger that will turn on the notification based on user date input
 		
 		// first get the date:
 		
-			var dateFormater = DateFormatter()
-			
-			dateFormater.dateFormat = "MM - dd - yyyy'T'HH:mm.ss.SSSZ"
-			dateFormater.timeZone = NSTimeZone(name: "UTC") as! TimeZone
-			let dateForm = dateFormater.date(from: ExamDateInput)
-			print("\(dateForm)")
-		/*
+		var dateFormater = DateFormatter()
+		
+		dateFormater.dateFormat = "MM - dd - yyyy'T'HH:mm.ss.SSSZ"
+		dateFormater.timeZone = TimeZone.current
+		let dateForm = dateFormater.date(from: ExamDateInput)
+		print("\(dateForm)")
+/*
 		// assign the date components to a variable
 		if dateForm == nil{
-			print("Didnt get teh date")
+			print("Didnt get the date")
 		}else{
-		components = Calendar.current.dateComponents([.month,.day,.year, .hour, .minute, .second], from: dateForm!)
+			components = Calendar.current.dateComponents([.month,.day,.year, .hour, .minute, .second], from: dateForm!)
 		}
+		
 		// creat a date component and intialise it with the user date input
-		
 		var date = DateComponents()
-			date.month = components.month
-			date.day = components.day
-			date.year = components.year
-			date.hour = components.hour
-			date.minute = components.minute
-			date.second = components.second
+		date.month = components.month
+		date.day = components.day
+		date.year = components.year
+		date.hour = components.hour
+		date.minute = components.minute
+		date.second = components.second
+
+
+		let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+
 		
+		//let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
 		
-		let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: false)
-*/
-		
-		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
 		
 		let request = UNNotificationRequest(identifier: "ExamTime", content: content, trigger: trigger)
 		
@@ -211,9 +198,15 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 			}
 		}
 		*/
+		*/
 		
+		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
 		
+		let request = UNNotificationRequest(identifier: "ExamTime", content: content, trigger: trigger)
+		
+		UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
 		// Setting up the response function
+		
 		func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
 			
 			switch response.actionIdentifier {
@@ -223,6 +216,7 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 				let alert = UIAlertController(title: "feedback", message: "will remind you in 2 mins", preferredStyle: .alert)
 				let action = UIAlertAction(title: "Sure", style: .default, handler: nil)
 				alert.addAction(action)
+				
 				present(alert, animated: true, completion: nil)
 				
 				case "SecondRespond" :
@@ -255,16 +249,23 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 			}
 			
 		}
-
+		
 	}
-	
-	
-	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+
+	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler:(UNNotificationPresentationOptions) -> Void) {
 		completionHandler([.alert, .badge,.sound])
 	}
 
 	
-
+	func getAllPendingNotifications(completion:@escaping ([UNNotificationRequest]?)->Void){
+		
+		
+		UNUserNotificationCenter.current().getPendingNotificationRequests { (requests:[UNNotificationRequest]) in
+			return completion(requests)
+		}
+		
+		
+	}
 	
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

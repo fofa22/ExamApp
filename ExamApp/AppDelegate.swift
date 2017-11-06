@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge,.sound]) { (granted, error) in
 			if granted {
 				print("granted")
+				
 			} else{
 				print("Not granted")
 			}

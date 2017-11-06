@@ -44,74 +44,45 @@ class ExamAgenda1: UITableViewController{
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
 		addBackButton()
 		
-		if UserData == true{
-			UserDefaults.standard.object(forKey: "UserData")
-			UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
-			UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
-			UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
-			var Examz = Exam(ExamTitle: ExamTitleInput.last!,Location: ExamLocationInput.last!,Date: ExamDateInput.last!)
-			ExamArray.append(Examz)
-			
-		}else{
-			
-			ExamTitleInput.append("No Data")
-			ExamLocationInput.append("No Data")
-			ExamDateInput.append("No Data")
-			
-			UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
-			UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
-			UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
-			
-			var Examz = Exam(ExamTitle: ExamTitleInput.last!,Location: ExamLocationInput.last!,Date: ExamDateInput.last!)
-			
-			if Examz.Date == "No Data"{
-				print("SAME!")
-			}else{
-				print("MUTATED!")
-			}
-			ExamArray.append(Examz)
-	
-			
-			// Attempt to transfer exams using default function
-			//ExamArray.append(Exam(ExamTitle: "No user data", Location: "No user data", Date: "No User data"))
-			//UserDefaults.standard.set(ExamArray, forKey: "TheExamArray" )
-			
-			
-			// removing user defaults
-			if ExamTitleInput[0] ==  "No Data" && ExamLocationInput[0] ==  "No Data" && ExamDateInput[0] == "No Data" {
-				
-				ExamTitleInput.remove(at: 0)
-				ExamLocationInput.remove(at: 0)
-				ExamDateInput.remove(at: 0)
-				ExamArray.remove(at: 0)
-				UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
-				UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
-				UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
-			
-				
-				
-
-				// trying to remove the default input using a full email!
-				// ExamArray.remove(at: 0)
-				// UserDefaults.standard.set(ExamArray, forKey: "TheExamArray" )
-			}
-			
-			
-		}
-		
-        // Uncomment the following line to preserve selection between presentations
+		// Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
          self.navigationItem.rightBarButtonItem = self.editButtonItem
+
 		
+	}
+	
+	override func viewDidAppear( _ animated: Bool){
 		
+		if let x = UserDefaults.standard.object(forKey: "TheExamTitles") as? String {
+			// UserDefaults.standard.object(forKey: "UserData")
+			UserDefaults.standard.set(ExamTitleInput, forKey: "TheExamTitles" )
+			UserDefaults.standard.set(ExamLocationInput, forKey: "TheExamLocations" )
+			UserDefaults.standard.set(ExamDateInput, forKey: "TheExamDates" )
+			var Examz = Exam(ExamTitle: ExamTitleInput.last!,Location: ExamLocationInput.last!,Date: ExamDateInput.last!)
+			ExamArray.append(Examz)
+			
+			if selectedRowMTVC == "Exam Folder"{
+				
+				ExamDictionary[selectedRowMTVC] = ExamArray
+				
+				print("The Date now is \(ExamDateInput)")
+				
+				
+			}else if selectedRowMTVC == "Trash"{
+				
+				ExamDictionary[selectedRowMTVC] = DeletedExams
+				print("The Deleted Date now is \(ExamDateInput)")
+				
+				
+			}
+		}
 		
-		
-		
-    }
+	}
 	
 	@IBAction func AddExamButton(_ sender: Any) {
 		//var ExamAdded: Exam
