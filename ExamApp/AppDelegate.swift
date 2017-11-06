@@ -24,6 +24,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				print("Not granted")
 			}
 		}
+		// intialising the notification:
+		// first option
+		let FirstRespond = UNNotificationAction(identifier: "FirstRespond", title: "Got it!", options: [.foreground])
+		// secound option
+		let SecondRespond = UNNotificationAction(identifier: "SecondRespond", title: "Remind me in 2 mins", options: [.foreground])
+		// setting up the notification category
+		
+		let AnswerCategory = UNNotificationCategory(identifier: "AnswerCategory", actions: [FirstRespond,SecondRespond], intentIdentifiers: [], options: [])
+		
+		// installing the category into the current notification center
+		
+		UNUserNotificationCenter.current().setNotificationCategories([AnswerCategory])
+
+		
 			return true
 	}
 	

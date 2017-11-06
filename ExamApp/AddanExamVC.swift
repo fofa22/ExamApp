@@ -21,15 +21,18 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 	var ExamTitleInput = ""
 	var ExamLocationInput = ""
 	var ExamDateInput = ""
+	var components = DateComponents()
 	
 	override func viewDidLoad() {
 	
 		
 		super.viewDidLoad()
 		
+		UNUserNotificationCenter.current().delegate = self
+
 		createDatePicker()
 		
-		UNUserNotificationCenter.current().delegate = self
+		
 		
 		// Do any additional setup after loading the view, typically from a nib.
 		ExamTitle.delegate = self as? UITextFieldDelegate
@@ -160,8 +163,9 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		content.subtitle = "Your Exam location is: \(ExamLocation.text!)"
 		content.body =  "Your Exam date is on the \(ExamDate.text!)"
 		content.badge = 1
+		content.categoryIdentifier = "AnswerCategory"
 	
-		// define a triger that will turn o the notification
+		// define a triger that will turn on the notification based on user date input
 		
 		// first get the date:
 		
@@ -170,62 +174,95 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 			dateFormater.dateFormat = "MM - dd - yyyy'T'HH:mm.ss.SSSZ"
 			dateFormater.timeZone = NSTimeZone(name: "UTC") as! TimeZone
 			let dateForm = dateFormater.date(from: ExamDateInput)
-		print("\(dateForm)")
+			print("\(dateForm)")
+		/*
+		// assign the date components to a variable
+		if dateForm == nil{
+			print("Didnt get teh date")
+		}else{
+		components = Calendar.current.dateComponents([.month,.day,.year, .hour, .minute, .second], from: dateForm!)
+		}
+		// creat a date component and intialise it with the user date input
 		
-		 var date = DateComponents()
-		 //date.hour = 8
-		 //date.minute = 30
-		date.second = 5
+		var date = DateComponents()
+			date.month = components.month
+			date.day = components.day
+			date.year = components.year
+			date.hour = components.hour
+			date.minute = components.minute
+			date.second = components.second
+		
 		
 		let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: false)
+*/
 		
+		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
 		
-		let request = UNNotificationRequest(identifier: "its Exam time", content: content, trigger: trigger)
+		let request = UNNotificationRequest(identifier: "ExamTime", content: content, trigger: trigger)
 		
-		UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+		 UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
 		
-		// intialising the notification:
-		// first option
-		let FirstRespond = UNNotificationAction(identifier: "FirstRespond", title: "Got it!", options: UNNotificationActionOptions.foreground)
-		// secound option
-		let SecondRespond = UNNotificationAction(identifier: "SecondRespond", title: "Remind me in 2 mins", options: UNNotificationActionOptions.foreground)
-		
-		
-		// setting up the notification category
-		
-		let AnswerCategory = UNNotificationCategory(identifier: "myCategory", actions: [FirstRespond,SecondRespond], intentIdentifiers: [], options: [])
-		
-		// installing the category into the current notification center
-		
-		UNUserNotificationCenter.current().setNotificationCategories([AnswerCategory])
-		
-		
+		/*
+		UNUserNotificationCenter.current().add(request) { (error: Error?) in
+			if error == nil{
+				print("notification scheduled", trigger.nextTriggerDate()?.addingTimeInterval(5) ?? "Date nil")
+			}else{
+				print("Error Scheduling the notification", error?.localizedDescription ?? "" )
+			}
+		}
+		*/
 		
 		
 		// Setting up the response function
-		
-		func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+		func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
 			
-			if response.actionIdentifier == "FirstRespond"{
-				print ("Alright")
+			switch response.actionIdentifier {
+				
+				case "FirstRespond" :
+				print ("1st")
+				let alert = UIAlertController(title: "feedback", message: "will remind you in 2 mins", preferredStyle: .alert)
+				let action = UIAlertAction(title: "Sure", style: .default, handler: nil)
+				alert.addAction(action)
+				present(alert, animated: true, completion: nil)
+				
+				case "SecondRespond" :
+				print ("2nd")
+				let alert = UIAlertController(title: "feedback", message: "sure!", preferredStyle: .alert)
+				let action = UIAlertAction(title: "Sure", style: .cancel, handler: nil) // added ancel instead of default!
+				alert.addAction(action)
+				present(alert, animated: true, completion: nil)
+				
+				// regenrating a new notification based on user input
+				// *****
+				/*
+				let content2 = UNMutableNotificationContent()
+				content2.title = "Your Exam: \(ExamTitle.text!) is up!"
+				content2.subtitle = "Your Exam location is: \(ExamLocation.text!)"
+				content2.body =  "Your Exam date is on the \(ExamDate.text!)"
+				content2.badge = 1
+				
+				let trigger2 = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+				
+				
+				let request2 = UNNotificationRequest(identifier: "its Exam time", content: content2, trigger: trigger2)
+				
+				UNUserNotificationCenter.current().add(request2, withCompletionHandler: nil)
+				*/
+				// *****
+
+			default:
+				break
 			}
-				
-			else{
-				
-				// re-creating the notification
-				
-				let content = UNMutableNotificationContent()
-				content.title = ExamTitle.text!
-				content.subtitle = ExamLocation.text!
-				content.body = ExamDate.text!
-				content.badge = 1
-				let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
-				let request = UNNotificationRequest(identifier: "Timer done!", content: content, trigger: trigger)
-				UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-			}
+			
 		}
 
 	}
+	
+	
+	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+		completionHandler([.alert, .badge,.sound])
+	}
+
 	
 
 	
@@ -235,6 +272,8 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 	}
 		}
 
+// reviewing input extension:
+
 extension ViewController : UITextFieldDelegate{
 	
 	func textFieldShouldReturn(_ textFeild: UITextField) -> Bool{
@@ -243,6 +282,8 @@ extension ViewController : UITextFieldDelegate{
 	}
 	
 }
+
+
 
 func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 	// Get the new view controller using segue.destinationViewController.
