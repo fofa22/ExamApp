@@ -115,6 +115,7 @@ class MenuTVC: UITableViewController {
 	DestVC2.navigationItem.title = selectedRowMTVC
 	print("\(selectedRowMTVC)")
 	
+	
 	if( selectedRowMTVC == "Exam Folder"){
 		let Addition = UIBarButtonItem(barButtonSystemItem: .add, target: DestVC2, action: #selector(DestVC2.AddExamButton(_:)))
 		DestVC2.navigationItem.rightBarButtonItem = Addition

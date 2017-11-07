@@ -120,18 +120,7 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 			var Examz = Exam(ExamTitle: ExamTitleInput, Location: ExamLocationInput, Date: ExamDateInput)
 			
 			ExamArray.append(Examz)
-			
-			// uncomment the following line to allow VC dismiss
-			/*
-			//performSegue(withIdentifier: "CON", sender: self)
-			*/
-			
-			dismiss(animated: true, completion: nil)
-			
-			
-
-			
-		}
+			}
 
 		
 		var alertView = UIAlertController(title: "Confirmation", message: "Your Exam: \(ExamTitleInput) has been added", preferredStyle: UIAlertControllerStyle.alert)
@@ -252,7 +241,8 @@ class AddanExamVC: UIViewController, UNUserNotificationCenterDelegate {
 		
 	}
 
-	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler:(UNNotificationPresentationOptions) -> Void) {
+
+	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 		completionHandler([.alert, .badge,.sound])
 	}
 

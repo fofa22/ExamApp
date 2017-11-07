@@ -13,15 +13,16 @@ var ExamTitleInput = [String]()
 var ExamLocationInput = [String]()
 var ExamDateInput = [String]()
 var ExamTitleString = ""
-
 var DeletedExams = [Exam]()
 var selectedRow = ""
-// var Exams: Exam
+var deletedExamIsEmpty = true
+var ExamArrayIsEmpty = true
+
 
 //Testig
 //var ExamArray = [Exam(ExamTitle: "loli",Location: "Boli",Date: "lofy"),Exam(ExamTitle: "loli2",Location: "Boli2",Date: "lofy2")]
 
-let  FoldersArray = ["Exams Folder","Trash"]
+// let  FoldersArray = ["Exams Folder","Trash"]
 // protocol to preview Exams
 protocol CellSelectedDelegate{
 	func read(Exam: Exam)
@@ -80,6 +81,7 @@ class ExamAgenda1: UITableViewController{
 				
 				
 			}
+		ExamArrayIsEmpty = false
 		}
 		
 	}
@@ -119,37 +121,73 @@ class ExamAgenda1: UITableViewController{
         // #warning Incomplete implementation, return the number of rows
         return ExamArray.count
     }
-
 	
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ExamCell", for: indexPath)
+	// Override to support editing the table view.
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == .delete {
+			// Delete the row from the data source
+			var deletedExam : Exam
+			deletedExam = ExamArray.remove(at: indexPath.row)
+			DeletedExams.append(deletedExam)
+			
+			
+			deletedExamIsEmpty = false
+			
+			tableView.deleteRows(at: [indexPath], with: .fade)
+		} else if editingStyle == .insert {
+			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		
-		cell.textLabel?.text = ExamArray[indexPath.row].ExamTitle2
+		let cell = tableView.dequeueReusableCell(withIdentifier: "ExamCell", for: indexPath)
 		
+		ExamDictionary["Trash"] = DeletedExams
+		ExamDictionary["Exam Folder"] = ExamArray
 		
-		cell.detailTextLabel?.text = ExamArray[indexPath.row].Date
-		/*
-		// Configure the cell...
+		//Ask the professor what are the most suitable conditions for these if statements??
+		//cell.textLabel?.text = ExamArray[indexPath.row].ExamTitle2
+		
+	//	cell.detailTextLabel?.text = ExamArray[indexPath.row].Date
+
+		// first find out which folder is the user in?
+		print("here is THE SELECTED ROW CURRENTLY!! \(selectedRowMTVC)")
+		
 		if selectedRowMTVC == "Exam Folder"{
 			cell.textLabel?.text = ExamArray[indexPath.row].ExamTitle2
 			
-			
 			cell.detailTextLabel?.text = ExamArray[indexPath.row].Date
+			// check to see if the Exam array is empty to avoid crash
+/*
+			if ExamArrayIsEmpty == true{
+				print("No exam!")
+			} else{
+				cell.textLabel?.text = ExamArray[indexPath.row].ExamTitle2
+				
+				cell.detailTextLabel?.text = ExamArray[indexPath.row].Date
+			}*/
+		} else if selectedRowMTVC == "Trash"  {
 			
-		}else if selectedRowMTVC == "Trash"{
-			cell.textLabel?.text = DeletedExams[indexPath.row].ExamTitle2
+			cell.textLabel?.text = DeletedExams.last?.ExamTitle2
 			
+			cell.detailTextLabel?.text = DeletedExams.last?.Date
 			
-			cell.detailTextLabel?.text = DeletedExams[indexPath.row].Date
+			/*
+			// check to see if the DeletedExam array is empty to avoid crash
+			if deletedExamIsEmpty == true{
+				print("Cell is empty, move in")
+			}else{
+				cell.textLabel?.text = DeletedExams[indexPath.row].ExamTitle2
+				
+				cell.detailTextLabel?.text = DeletedExams[indexPath.row].Date
+			}*/
 		}
-		
-		
-*/
-        return cell
-    }
+			return cell
+	}
 	
 
-	
+
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -158,23 +196,6 @@ class ExamAgenda1: UITableViewController{
 	
 
 	
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-			
-			var deletedExam : Exam
-			deletedExam = ExamArray.remove(at: indexPath.row)
-			DeletedExams.append(deletedExam)
-			ExamDictionary[selectedRowMTVC] = DeletedExams
-			
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-	
-
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
